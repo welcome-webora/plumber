@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сантехник на дом</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background: url('ь.jpg') no-repeat left center fixed; /* фон-картинка слева */
+        background-size: cover; /* масштабируется, подрезается только если не помещается */
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    /* Шапка */
+    .header-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        gap: 20px;
+        text-align: center;
+        z-index: 2;
+        position: relative;
+    }
+
+    .header {
+        font-size: 2em;
+        font-weight: bold;
+        color: #333; /* цвет как у Наши услуги */
+        text-shadow: none; /* без тени */
+        margin: 0 20px;
+    }
+
+    /* Кнопки */
+    .action-button {
+        font-size: 1em;
+        font-weight: bold;
+        background: #fff;
+        color: #333;
+        border: 2px solid orange;
+        border-radius: 8px;
+        padding: 10px 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-shadow: none;
+    }
+
+    .action-button:hover {
+        background: orange;
+        color: #fff;
+        transform: scale(1.05);
+    }
+
+    /* Капля */
+    .drop {
+        width: 14px;
+        height: 14px;
+        background: rgba(0, 162, 232, 0.8);
+        border-radius: 50%;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    @keyframes dropFall {
+        0% { opacity: 0; transform: translateY(0); }
+        10% { opacity: 1; }
+        80% { opacity: 1; transform: translateY(15vh); }
+        100% { opacity: 0; transform: translateY(18vh); }
+    }
+
+    /* Секция с услугами */
+    .services {
+        position: relative;
+        z-index: 2;
+        width: 90%;
+        max-width: 600px;
+        margin: 20px auto;
+        background: transparent; /* прозрачный фон */
+        text-align: center;
+    }
+
+    .services h2 {
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .services ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 15px 0;
+    }
+
+    .services li {
+        padding: 10px 0;
+        font-size: 1.1em;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .services .phone {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: orange;
+        margin-top: 15px;
+    }
+
+    /* Вода */
+    .water-pool {
+        position: fixed;
+        bottom: 0;  
+        left: 0;
+        width: 100vw;
+        height: 20vh;  
+        background: rgba(0, 162, 232, 0.25);
+        backdrop-filter: blur(2px);
+        overflow: visible;
+        z-index: 1;
+    }
+
+    /* Уточки */
+    .duck {
+        position: absolute;
+        width: 10vw;
+        max-width: 60px;
+        transition: bottom 0.5s;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .duck:nth-child(1) { left: 20%; animation-delay: 0s; }
+    .duck:nth-child(2) { left: 45%; animation-delay: 1s; }
+    .duck:nth-child(3) { left: 70%; animation-delay: 0.5s; }
+
+    @keyframes float {
+        0%   { transform: translateY(0); }
+        50%  { transform: translateY(-2vh); }
+        100% { transform: translateY(0); }
+    }
+
+    /* Адаптивность */
+    @media (max-width: 480px) {
+        .header {
+            font-size: 1.5em;
+        }
+        .action-button {
+            padding: 8px 12px;
+            font-size: 0.9em;
+        }
+        .services li {
+            font-size: 1em;
+        }
+        .duck {
+            width: 15vw;
+        }
+        .water-pool {
+            height: 25vh;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- Заголовок + кнопки -->
+<div class="header-container">
+    <button class="action-button" id="break">Вы — ломаете</button>
+    <div class="header">Сантехник на дом</div>
+    <button class="action-button" id="fix">Мы — чиним</button>
+    <div class="drop" id="drop"></div>
+</div>
+
+<!-- Услуги -->
+<div class="services">
+    <h2>Наши услуги</h2>
+    <ul>
+        <li>Устранение протечек <span>от 500 ₽</span></li>
+        <li>Замена смесителя <span>от 1200 ₽</span></li>
+        <li>Прочистка труб <span>от 800 ₽</span></li>
+        <li>Установка унитаза <span>от 2500 ₽</span></li>
+        <li>Монтаж бойлера <span>от 3500 ₽</span></li>
+    </ul>
+    <div class="phone">📞 +7 (990) 777-77-77</div>
+</div>
+
+<!-- Вода -->
+<div class="water-pool" id="pool">
+    <img src="ут.png" alt="Уточка" class="duck" id="duck1">
+    <img src="ут.png" alt="Уточка" class="duck" id="duck2">
+    <img src="ут.png" alt="Уточка" class="duck" id="duck3">
+</div>
+
+<script>
+    const pool = document.getElementById('pool');
+    const drop = document.getElementById('drop');
+    const ducks = document.querySelectorAll('.duck');
+    const breakBtn = document.getElementById('break');
+    const fixBtn = document.getElementById('fix');
+
+    let waterLevel = window.innerHeight * 0.2;
+    const startLevel = waterLevel;
+
+    function updateDucks() {
+        ducks.forEach(duck => {
+            duck.style.bottom = (waterLevel - window.innerHeight * 0.03) + 'px';
+        });
+    }
+
+    pool.style.height = waterLevel + 'px';
+    updateDucks();
+
+    breakBtn.addEventListener('click', () => {
+        waterLevel += window.innerHeight * 0.03;
+        if (waterLevel > window.innerHeight - 50) waterLevel = window.innerHeight - 50;
+        pool.style.height = waterLevel + 'px';
+        updateDucks();
+
+        drop.style.animation = 'none';
+        void drop.offsetWidth;
+        drop.style.animation = 'dropFall 1.5s forwards';
+    });
+
+    fixBtn.addEventListener('click', () => {
+        waterLevel = startLevel;
+        pool.style.height = waterLevel + 'px';
+        updateDucks();
+    });
+
+    window.addEventListener('resize', () => {
+        pool.style.width = window.innerWidth + 'px';
+        const ratio = waterLevel / pool.offsetHeight;
+        waterLevel = window.innerHeight * 0.2 * ratio;
+        pool.style.height = waterLevel + 'px';
+        updateDucks();
+    });
+</script>
+
+</body>
+</html>
